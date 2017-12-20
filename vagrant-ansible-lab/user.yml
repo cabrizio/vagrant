@@ -1,0 +1,12 @@
+- hosts: all
+  remote_user: root
+  tasks:
+    - user:
+        name: ansible
+        comment: "Ansible"
+        password: $6$DZ0GE.KV2poHjFy5$eP5eqrUHQsrDkSibsbqGGAg3B4RlMYYMO5Wk.WBJaBpjiOpLiqWsMyvxd26jgABOjYM8NyxnCfVZt3syu759j/
+        groups: admin,sudo
+        generate_ssh_key: yes
+        ssh_key_bits: 2048
+        ssh_key_file: .ssh/id_rsa
+      become: true
