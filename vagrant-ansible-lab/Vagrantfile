@@ -1,0 +1,42 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure("2") do |config|
+  config.vm.box = "fedora/27-atomic-host"
+  #config.ssh.insert_key = false
+  #config.ssh.username = "carmine.fabrizio"
+  #config.ssh.private_key_path = ["~/.ssh/id_rsa.pub" , "~/.vagrant.d/insecure_private_key"]
+
+  config.vm.define "atomic-master" do |master|
+   master.vm.hostname = "atomic-master"
+   master.vm.network "private_network" , type: "dhcp"
+   #master.vm.network "forwarded_port", guest: 80, guest_ip: "172.28.128.3", host: 8080, host_ip: "127.0.0.1"
+   master.vm.provider "virtualbox" do |vb|
+     vb.gui = false
+     vb.memory = "512"
+    end
+   end
+
+  config.vm.define "atomic01" do |cluster01|
+   cluster01.vm.hostname = "atomic01"
+   cluster01.vm.network "private_network", type: "dhcp"
+   #cluster01.vm.network "forwarded_port", guest: 80, guest_ip: "10.0.2.15", host: 8081, host_ip: "127.0.0.1"
+   cluster01.vm.provider "virtualbox" do |vb|
+     vb.gui = false
+     vb.memory = "512"
+   end
+  end
+  config.vm.define "atomic02" do |cluster02|
+   cluster02.vm.hostname = "atomic02"
+   cluster02.vm.network "private_network", type: "dhcp"
+   #cluster01.vm.network "forwarded_port", guest: 80, guest_ip: "10.0.2.17", host: 8082, host_ip: "127.0.0.1"
+   cluster02.vm.provider "virtualbox" do |vb|
+     vb.gui = false
+     vb.memory = "512"
+   end
+  end
+end
